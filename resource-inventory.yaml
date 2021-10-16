@@ -36,6 +36,12 @@ paths:
           description: Requested number of resources to be provided in response
           schema:
             type: integer
+        - name: '@type'
+          in: query
+          description: Resource type including any sub-types to be returned in response
+          schema:
+            type: string
+          example: LogicalResource
       responses:
         200:
           description: Success
@@ -374,6 +380,12 @@ paths:
           description: Requested number of resources to be provided in response
           schema:
             type: integer
+        - name: '@type'
+          in: query
+          description: Resource type including any sub-types to be returned in response
+          schema:
+            type: string
+          example: Foo
       responses:
         200:
           description: Success
@@ -712,6 +724,12 @@ paths:
           description: Requested number of resources to be provided in response
           schema:
             type: integer
+        - name: '@type'
+          in: query
+          description: Resource type including any sub-types to be returned in response
+          schema:
+            type: string
+          example: Foo
       responses:
         200:
           description: Success
