@@ -1,0 +1,3483 @@
+openapi: 3.0.3
+info:
+  title: Resource Inventory Management
+  description: This is Swagger UI environment generated for the TMF Resource Inventory
+    Management specification
+  version: 4.0.0
+servers:
+  - url: https://serverRoot/tmf-api/resourceInventoryManagement/v4/
+tags:
+  - name: resource
+  - name: physicalResource
+  - name: logicalResource
+  - name: notification listeners (client side)
+  - name: events subscription
+paths:
+  /resource:
+    get:
+      tags:
+        - resource
+      summary: List or find Resource objects
+      description: This operation list or find Resource entities
+      operationId: listResource
+      parameters:
+        - name: fields
+          in: query
+          description: Comma-separated properties to be provided in response
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: Requested index for start of resources to be provided in response
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Requested number of resources to be provided in response
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+          content:
+            application/json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Resource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - resource
+      summary: Creates a Resource
+      description: This operation creates a Resource entity.
+      operationId: createResource
+      requestBody:
+        description: The Resource to be created
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/Resource_Create'
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: resource
+  /resource/{id}:
+    get:
+      tags:
+        - resource
+      summary: Retrieves a Resource by ID
+      description: This operation retrieves a Resource entity. Attribute selection
+        is enabled for all first level attributes.
+      operationId: retrieveResource
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the Resource
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: Comma-separated properties to provide in response
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - resource
+      summary: Deletes a Resource
+      description: This operation deletes a Resource entity.
+      operationId: deleteResource
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the Resource
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Deleted
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+        - resource
+      summary: Updates partially a Resource
+      description: This operation updates partially a Resource entity.
+      operationId: patchResource
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the Resource
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The Resource to be updated
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/Resource_Update'
+        required: true
+      responses:
+        200:
+          description: Updated
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: resource
+  /physicalResource:
+    get:
+      tags:
+        - physicalResource
+      summary: List or find PhysicalResource objects
+      description: This operation list or find PhysicalResource entities
+      operationId: listPhysicalResource
+      parameters:
+        - name: fields
+          in: query
+          description: Comma-separated properties to be provided in response
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: Requested index for start of resources to be provided in response
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Requested number of resources to be provided in response
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+          content:
+            application/json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PhysicalResource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - physicalResource
+      summary: Creates a PhysicalResource
+      description: This operation creates a PhysicalResource entity.
+      operationId: createPhysicalResource
+      requestBody:
+        description: The PhysicalResource to be created
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PhysicalResource_Create'
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PhysicalResource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: physicalResource
+  /physicalResource/{id}:
+    get:
+      tags:
+        - physicalResource
+      summary: Retrieves a PhysicalResource by ID
+      description: This operation retrieves a PhysicalResource entity. Attribute selection
+        is enabled for all first level attributes.
+      operationId: retrievePhysicalResource
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the PhysicalResource
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: Comma-separated properties to provide in response
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PhysicalResource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - physicalResource
+      summary: Deletes a PhysicalResource
+      description: This operation deletes a PhysicalResource entity.
+      operationId: deletePhysicalResource
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the PhysicalResource
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Deleted
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+        - physicalResource
+      summary: Updates partially a PhysicalResource
+      description: This operation updates partially a PhysicalResource entity.
+      operationId: patchPhysicalResource
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the PhysicalResource
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The PhysicalResource to be updated
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PhysicalResource_Update'
+        required: true
+      responses:
+        200:
+          description: Updated
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PhysicalResource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: physicalResource
+  /logicalResource:
+    get:
+      tags:
+        - logicalResource
+      summary: List or find LogicalResource objects
+      description: This operation list or find LogicalResource entities
+      operationId: listLogicalResource
+      parameters:
+        - name: fields
+          in: query
+          description: Comma-separated properties to be provided in response
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: Requested index for start of resources to be provided in response
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Requested number of resources to be provided in response
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Success
+          headers:
+            X-Total-Count:
+              description: Total number of items matching criteria
+              schema:
+                type: integer
+            X-Result-Count:
+              description: Actual number of items returned in the response body
+              schema:
+                type: integer
+          content:
+            application/json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LogicalResource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - logicalResource
+      summary: Creates a LogicalResource
+      description: This operation creates a LogicalResource entity.
+      operationId: createLogicalResource
+      requestBody:
+        description: The LogicalResource to be created
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/LogicalResource_Create'
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/LogicalResource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: logicalResource
+  /logicalResource/{id}:
+    get:
+      tags:
+        - logicalResource
+      summary: Retrieves a LogicalResource by ID
+      description: This operation retrieves a LogicalResource entity. Attribute selection
+        is enabled for all first level attributes.
+      operationId: retrieveLogicalResource
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the LogicalResource
+          required: true
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: Comma-separated properties to provide in response
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/LogicalResource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - logicalResource
+      summary: Updates a LogicalResource
+      description: This operation updates a LogicalResource entity.
+      operationId: updateLogicalResource
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the LogicalResource
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The LogicalResource to be updated
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/LogicalResource_Update'
+        required: true
+      responses:
+        200:
+          description: Updated
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/LogicalResource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: logicalResource
+    delete:
+      tags:
+        - logicalResource
+      summary: Deletes a LogicalResource
+      description: This operation deletes a LogicalResource entity.
+      operationId: deleteLogicalResource
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the LogicalResource
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Deleted
+          content: {}
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+        - logicalResource
+      summary: Updates partially a LogicalResource
+      description: This operation updates partially a LogicalResource entity.
+      operationId: patchLogicalResource
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the LogicalResource
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The LogicalResource to be updated
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/LogicalResource_Update'
+        required: true
+      responses:
+        200:
+          description: Updated
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/LogicalResource'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: logicalResource
+  /hub:
+    post:
+      tags:
+        - events subscription
+      summary: Register a listener
+      description: Sets the communication endpoint address the service instance must
+        use to deliver information about its health state, execution state, failures
+        and metrics.
+      operationId: registerListener
+      requestBody:
+        description: Data containing the callback endpoint to deliver the information
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        required: true
+      responses:
+        201:
+          description: Subscribed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: data
+  /hub/{id}:
+    delete:
+      tags:
+        - events subscription
+      summary: Unregister a listener
+      description: Resets the communication endpoint address the service instance
+        must use to deliver information about its health state, execution state, failures
+        and metrics.
+      operationId: unregisterListener
+      parameters:
+        - name: id
+          in: path
+          description: The id of the registered listener
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Deleted
+          content: {}
+        400:
+          description: Bad request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /listener/resourceCreateEvent:
+    post:
+      tags:
+        - notification listeners (client side)
+      summary: Client listener for entity ResourceCreateEvent
+      description: Example of a client listener for receiving the notification ResourceCreateEvent
+      operationId: listenToResourceCreateEvent
+      requestBody:
+        description: The event data
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/ResourceCreateEvent'
+        required: true
+      responses:
+        201:
+          description: Notified
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: data
+  /listener/resourceAttributeValueChangeEvent:
+    post:
+      tags:
+        - notification listeners (client side)
+      summary: Client listener for entity ResourceAttributeValueChangeEvent
+      description: Example of a client listener for receiving the notification ResourceAttributeValueChangeEvent
+      operationId: listenToResourceAttributeValueChangeEvent
+      requestBody:
+        description: The event data
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/ResourceAttributeValueChangeEvent'
+        required: true
+      responses:
+        201:
+          description: Notified
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: data
+  /listener/resourceStateChangeEvent:
+    post:
+      tags:
+        - notification listeners (client side)
+      summary: Client listener for entity ResourceStateChangeEvent
+      description: Example of a client listener for receiving the notification ResourceStateChangeEvent
+      operationId: listenToResourceStateChangeEvent
+      requestBody:
+        description: The event data
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/ResourceStateChangeEvent'
+        required: true
+      responses:
+        201:
+          description: Notified
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: data
+  /listener/resourceDeleteEvent:
+    post:
+      tags:
+        - notification listeners (client side)
+      summary: Client listener for entity ResourceDeleteEvent
+      description: Example of a client listener for receiving the notification ResourceDeleteEvent
+      operationId: listenToResourceDeleteEvent
+      requestBody:
+        description: The event data
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/ResourceDeleteEvent'
+        required: true
+      responses:
+        201:
+          description: Notified
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: data
+  /listener/physicalResourceCreateEvent:
+    post:
+      tags:
+        - notification listeners (client side)
+      summary: Client listener for entity PhysicalResourceCreateEvent
+      description: Example of a client listener for receiving the notification PhysicalResourceCreateEvent
+      operationId: listenToPhysicalResourceCreateEvent
+      requestBody:
+        description: The event data
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PhysicalResourceCreateEvent'
+        required: true
+      responses:
+        201:
+          description: Notified
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: data
+  /listener/physicalResourceAttributeValueChangeEvent:
+    post:
+      tags:
+        - notification listeners (client side)
+      summary: Client listener for entity PhysicalResourceAttributeValueChangeEvent
+      description: Example of a client listener for receiving the notification PhysicalResourceAttributeValueChangeEvent
+      operationId: listenToPhysicalResourceAttributeValueChangeEvent
+      requestBody:
+        description: The event data
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PhysicalResourceAttributeValueChangeEvent'
+        required: true
+      responses:
+        201:
+          description: Notified
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: data
+  /listener/physicalResourceStateChangeEvent:
+    post:
+      tags:
+        - notification listeners (client side)
+      summary: Client listener for entity PhysicalResourceStateChangeEvent
+      description: Example of a client listener for receiving the notification PhysicalResourceStateChangeEvent
+      operationId: listenToPhysicalResourceStateChangeEvent
+      requestBody:
+        description: The event data
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PhysicalResourceStateChangeEvent'
+        required: true
+      responses:
+        201:
+          description: Notified
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: data
+  /listener/physicalResourceDeleteEvent:
+    post:
+      tags:
+        - notification listeners (client side)
+      summary: Client listener for entity PhysicalResourceDeleteEvent
+      description: Example of a client listener for receiving the notification PhysicalResourceDeleteEvent
+      operationId: listenToPhysicalResourceDeleteEvent
+      requestBody:
+        description: The event data
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/PhysicalResourceDeleteEvent'
+        required: true
+      responses:
+        201:
+          description: Notified
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+        400:
+          description: Bad Request
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Unauthorized
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Not Found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        405:
+          description: Method Not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        409:
+          description: Conflict
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: data
+components:
+  schemas:
+    Any:
+      type: object
+    Attachment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this particular attachment
+        href:
+          type: string
+          description: URI for this Attachment
+        attachmentType:
+          type: string
+          description: Attachment type such as video, picture
+        content:
+          type: string
+          description: The actual contents of the attachment object, if embedded,
+            encoded as base64
+        description:
+          type: string
+          description: A narrative text describing the content of the attachment
+        mimeType:
+          type: string
+          description: Attachment mime type such as extension file for video, picture
+            and document
+        name:
+          type: string
+          description: The name of the attachment
+        url:
+          type: string
+          description: Uniform Resource Locator, is a web page address (a subset of
+            URI)
+        size:
+          $ref: '#/components/schemas/Quantity'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+      description: Complements the description of an element (for instance a product)
+        through video, pictures...
+    AttachmentRef:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique-Identifier for this attachment
+        href:
+          type: string
+          description: URL serving as reference for the attachment resource
+        description:
+          type: string
+          description: A narrative text describing the content of the attachment
+        name:
+          type: string
+          description: Name of the related entity.
+        url:
+          type: string
+          description: Link to the attachment media/content
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: Attachment reference. An attachment complements the description
+        of an element (for instance a product) through video, pictures
+    AttachmentRefOrValue:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this particular attachment
+        href:
+          type: string
+          description: URI for this Attachment
+        attachmentType:
+          type: string
+          description: Attachment type such as video, picture
+        content:
+          type: string
+          description: The actual contents of the attachment object, if embedded,
+            encoded as base64
+        description:
+          type: string
+          description: A narrative text describing the content of the attachment
+        mimeType:
+          type: string
+          description: Attachment mime type such as extension file for video, picture
+            and document
+        name:
+          type: string
+          description: The name of the attachment
+        url:
+          type: string
+          description: Uniform Resource Locator, is a web page address (a subset of
+            URI)
+        size:
+          $ref: '#/components/schemas/Quantity'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: An attachment by value or by reference. For AttachmentRefOrValue,
+        the attribute type,schemaLocation and referredType are related to the contained
+        entity and not to AttchmentRefOrValue itself
+    Characteristic:
+      required:
+        - name
+        - value
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the characteristic
+        name:
+          type: string
+          description: Name of the characteristic
+        valueType:
+          type: string
+          description: Data type of the value of the characteristic
+        characteristicRelationship:
+          type: array
+          items:
+            $ref: '#/components/schemas/CharacteristicRelationship'
+        value:
+          $ref: '#/components/schemas/Any'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+      description: Describes a given characteristic of an object or entity through
+        a name/value pair.
+    CharacteristicRelationship:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the characteristic
+        relationshipType:
+          type: string
+          description: The type of relationship
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+      description: Another Characteristic that is related to the current Characteristic;
+    EntityRef:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of a related entity.
+        href:
+          type: string
+          description: Reference of the related entity.
+        name:
+          type: string
+          description: Name of the related entity.
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: Entity reference schema to be use for all entityRef class.
+    LogicalResource:
+      required:
+        - href
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of an instance of the resource. Required to be unique
+            within the resource type.  Used in URIs as the identifier for specific
+            instances of a type.
+        href:
+          type: string
+          description: The URI for the object itself.
+        category:
+          type: string
+          description: Category of the concrete resource. e.g Gold, Silver for MSISDN
+            concrete resource
+        description:
+          type: string
+          description: free-text description of the resource
+        endOperatingDate:
+          type: string
+          description: A date time( DateTime). The date till the resource is operating
+          format: date-time
+        name:
+          type: string
+          description: A string used to give a name to the resource
+        resourceVersion:
+          type: string
+          description: A field that identifies the specific version of an instance
+            of a resource.
+        startOperatingDate:
+          type: string
+          description: A date time( DateTime). The date from which the resource is
+            operating
+          format: date-time
+        value:
+          type: string
+          description: the value of the logical resource. E.g '0746712345' for  MSISDN's
+        administrativeState:
+          $ref: '#/components/schemas/ResourceAdministrativeStateType'
+        attachment:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+        note:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        operationalState:
+          $ref: '#/components/schemas/ResourceOperationalStateType'
+        place:
+          $ref: '#/components/schemas/RelatedPlaceRefOrValue'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+        resourceCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        resourceRelationship:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRelationship'
+        resourceSpecification:
+          $ref: '#/components/schemas/ResourceSpecificationRef'
+        resourceStatus:
+          $ref: '#/components/schemas/ResourceStatusType'
+        usageState:
+          $ref: '#/components/schemas/ResourceUsageStateType'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: Logic resource is a type of resource that describes the common
+        set of attributes shared by all concrete logical resources (e.g. TPE, MSISDN,
+        IP Addresses) in the inventory.
+    LogicalResource_Create:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Category of the concrete resource. e.g Gold, Silver for MSISDN
+            concrete resource
+        description:
+          type: string
+          description: free-text description of the resource
+        endOperatingDate:
+          type: string
+          description: A date time( DateTime). The date till the resource is operating
+          format: date-time
+        name:
+          type: string
+          description: A string used to give a name to the resource
+        resourceVersion:
+          type: string
+          description: A field that identifies the specific version of an instance
+            of a resource.
+        startOperatingDate:
+          type: string
+          description: A date time( DateTime). The date from which the resource is
+            operating
+          format: date-time
+        value:
+          type: string
+          description: the value of the logical resource. E.g '0746712345' for  MSISDN's
+        administrativeState:
+          $ref: '#/components/schemas/ResourceAdministrativeStateType'
+        attachment:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+        note:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        operationalState:
+          $ref: '#/components/schemas/ResourceOperationalStateType'
+        place:
+          $ref: '#/components/schemas/RelatedPlaceRefOrValue'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+        resourceCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        resourceRelationship:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRelationship'
+        resourceSpecification:
+          $ref: '#/components/schemas/ResourceSpecificationRef'
+        resourceStatus:
+          $ref: '#/components/schemas/ResourceStatusType'
+        usageState:
+          $ref: '#/components/schemas/ResourceUsageStateType'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: |-
+        Logic resource is a type of resource that describes the common set of attributes shared by all concrete logical resources (e.g. TPE, MSISDN, IP Addresses) in the inventory.
+        Skipped properties: id,href
+    LogicalResource_Update:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Category of the concrete resource. e.g Gold, Silver for MSISDN
+            concrete resource
+        description:
+          type: string
+          description: free-text description of the resource
+        endOperatingDate:
+          type: string
+          description: A date time( DateTime). The date till the resource is operating
+          format: date-time
+        name:
+          type: string
+          description: A string used to give a name to the resource
+        resourceVersion:
+          type: string
+          description: A field that identifies the specific version of an instance
+            of a resource.
+        startOperatingDate:
+          type: string
+          description: A date time( DateTime). The date from which the resource is
+            operating
+          format: date-time
+        value:
+          type: string
+          description: the value of the logical resource. E.g '0746712345' for  MSISDN's
+        administrativeState:
+          $ref: '#/components/schemas/ResourceAdministrativeStateType'
+        attachment:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+        note:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        operationalState:
+          $ref: '#/components/schemas/ResourceOperationalStateType'
+        place:
+          $ref: '#/components/schemas/RelatedPlaceRefOrValue'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+        resourceCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        resourceRelationship:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRelationship'
+        resourceSpecification:
+          $ref: '#/components/schemas/ResourceSpecificationRef'
+        resourceStatus:
+          $ref: '#/components/schemas/ResourceStatusType'
+        usageState:
+          $ref: '#/components/schemas/ResourceUsageStateType'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: |-
+        Logic resource is a type of resource that describes the common set of attributes shared by all concrete logical resources (e.g. TPE, MSISDN, IP Addresses) in the inventory.
+        Skipped properties: id,href
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the note within its containing entity (may or
+            may not be globally unique, depending on provider implementation)
+        author:
+          type: string
+          description: Author of the note
+        date:
+          type: string
+          description: Date of the note
+          format: date-time
+        text:
+          type: string
+          description: Text of the note
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+      description: Extra information about a given entity
+    PhysicalResource:
+      required:
+        - href
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of an instance of the resource. Required to be unique
+            within the resource type.  Used in URIs as the identifier for specific
+            instances of a type.
+        href:
+          type: string
+          description: The URI for the object itself.
+        category:
+          type: string
+          description: Category of the concrete resource. e.g Gold, Silver for MSISDN
+            concrete resource
+        description:
+          type: string
+          description: free-text description of the resource
+        endOperatingDate:
+          type: string
+          description: A date time( DateTime). The date till the resource is operating
+          format: date-time
+        manufactureDate:
+          type: string
+          description: This is a string attribute that defines the date of manufacture
+            of this item in the fixed format "dd/mm/yyyy". This is an optional attribute.
+          format: date-time
+        name:
+          type: string
+          description: A string used to give a name to the resource
+        powerState:
+          type: string
+          description: |-
+            This defines the current power status of the hardware item. Values include:
+
+              0:  Unknown
+              1:  Not Applicable
+              2:  No Power Applied
+              3: Full Power Applied
+              4:  Power Save - Normal
+              5:  Power Save - Degraded
+              6:  Power Save - Standby
+              7:  Power Save - Critical
+              8:  Power Save - Low Power Mode
+              9:  Power Save - Unknown
+             10: Power Cycle
+             11: Power Warning
+             12: Power Off
+        resourceVersion:
+          type: string
+          description: A field that identifies the specific version of an instance
+            of a resource.
+        serialNumber:
+          type: string
+          description: This is a string that represents a manufacturer-allocated number
+            used to identify different instances of the same hardware item. The ModelNumber
+            and PartNumber attributes are used to identify different types of hardware
+            items. This is a REQUIRED attribute.
+        startOperatingDate:
+          type: string
+          description: A date time( DateTime). The date from which the resource is
+            operating
+          format: date-time
+        versionNumber:
+          type: string
+          description: This is a string that identifies the version of this physical
+            resource. This is an optional attribute.
+        administrativeState:
+          $ref: '#/components/schemas/ResourceAdministrativeStateType'
+        attachment:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+        note:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        operationalState:
+          $ref: '#/components/schemas/ResourceOperationalStateType'
+        place:
+          $ref: '#/components/schemas/RelatedPlaceRefOrValue'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+        resourceCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        resourceRelationship:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRelationship'
+        resourceSpecification:
+          $ref: '#/components/schemas/ResourceSpecificationRef'
+        resourceStatus:
+          $ref: '#/components/schemas/ResourceStatusType'
+        usageState:
+          $ref: '#/components/schemas/ResourceUsageStateType'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: Physical resource is a type of resource that describes the common
+        set of attributes shared by all concrete physical resources (e.g. EQUIPMENT)
+        in the inventory.
+    PhysicalResource_Create:
+      required:
+        - name
+      type: object
+      properties:
+        category:
+          type: string
+          description: Category of the concrete resource. e.g Gold, Silver for MSISDN
+            concrete resource
+        description:
+          type: string
+          description: free-text description of the resource
+        endOperatingDate:
+          type: string
+          description: A date time( DateTime). The date till the resource is operating
+          format: date-time
+        manufactureDate:
+          type: string
+          description: This is a string attribute that defines the date of manufacture
+            of this item in the fixed format "dd/mm/yyyy". This is an optional attribute.
+          format: date-time
+        name:
+          type: string
+          description: A string used to give a name to the resource
+        powerState:
+          type: string
+          description: |-
+            This defines the current power status of the hardware item. Values include:
+
+              0:  Unknown
+              1:  Not Applicable
+              2:  No Power Applied
+              3: Full Power Applied
+              4:  Power Save - Normal
+              5:  Power Save - Degraded
+              6:  Power Save - Standby
+              7:  Power Save - Critical
+              8:  Power Save - Low Power Mode
+              9:  Power Save - Unknown
+             10: Power Cycle
+             11: Power Warning
+             12: Power Off
+        resourceVersion:
+          type: string
+          description: A field that identifies the specific version of an instance
+            of a resource.
+        serialNumber:
+          type: string
+          description: This is a string that represents a manufacturer-allocated number
+            used to identify different instances of the same hardware item. The ModelNumber
+            and PartNumber attributes are used to identify different types of hardware
+            items. This is a REQUIRED attribute.
+        startOperatingDate:
+          type: string
+          description: A date time( DateTime). The date from which the resource is
+            operating
+          format: date-time
+        versionNumber:
+          type: string
+          description: This is a string that identifies the version of this physical
+            resource. This is an optional attribute.
+        administrativeState:
+          $ref: '#/components/schemas/ResourceAdministrativeStateType'
+        attachment:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+        note:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        operationalState:
+          $ref: '#/components/schemas/ResourceOperationalStateType'
+        place:
+          $ref: '#/components/schemas/RelatedPlaceRefOrValue'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+        resourceCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        resourceRelationship:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRelationship'
+        resourceSpecification:
+          $ref: '#/components/schemas/ResourceSpecificationRef'
+        resourceStatus:
+          $ref: '#/components/schemas/ResourceStatusType'
+        usageState:
+          $ref: '#/components/schemas/ResourceUsageStateType'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: |-
+        Physical resource is a type of resource that describes the common set of attributes shared by all concrete physical resources (e.g. EQUIPMENT) in the inventory.
+        Skipped properties: id,href
+    PhysicalResource_Update:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Category of the concrete resource. e.g Gold, Silver for MSISDN
+            concrete resource
+        description:
+          type: string
+          description: free-text description of the resource
+        endOperatingDate:
+          type: string
+          description: A date time( DateTime). The date till the resource is operating
+          format: date-time
+        manufactureDate:
+          type: string
+          description: This is a string attribute that defines the date of manufacture
+            of this item in the fixed format "dd/mm/yyyy". This is an optional attribute.
+          format: date-time
+        name:
+          type: string
+          description: A string used to give a name to the resource
+        powerState:
+          type: string
+          description: |-
+            This defines the current power status of the hardware item. Values include:
+
+              0:  Unknown
+              1:  Not Applicable
+              2:  No Power Applied
+              3: Full Power Applied
+              4:  Power Save - Normal
+              5:  Power Save - Degraded
+              6:  Power Save - Standby
+              7:  Power Save - Critical
+              8:  Power Save - Low Power Mode
+              9:  Power Save - Unknown
+             10: Power Cycle
+             11: Power Warning
+             12: Power Off
+        resourceVersion:
+          type: string
+          description: A field that identifies the specific version of an instance
+            of a resource.
+        serialNumber:
+          type: string
+          description: This is a string that represents a manufacturer-allocated number
+            used to identify different instances of the same hardware item. The ModelNumber
+            and PartNumber attributes are used to identify different types of hardware
+            items. This is a REQUIRED attribute.
+        startOperatingDate:
+          type: string
+          description: A date time( DateTime). The date from which the resource is
+            operating
+          format: date-time
+        versionNumber:
+          type: string
+          description: This is a string that identifies the version of this physical
+            resource. This is an optional attribute.
+        administrativeState:
+          $ref: '#/components/schemas/ResourceAdministrativeStateType'
+        attachment:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+        note:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        operationalState:
+          $ref: '#/components/schemas/ResourceOperationalStateType'
+        place:
+          $ref: '#/components/schemas/RelatedPlaceRefOrValue'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+        resourceCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        resourceRelationship:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRelationship'
+        resourceSpecification:
+          $ref: '#/components/schemas/ResourceSpecificationRef'
+        resourceStatus:
+          $ref: '#/components/schemas/ResourceStatusType'
+        usageState:
+          $ref: '#/components/schemas/ResourceUsageStateType'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: |-
+        Physical resource is a type of resource that describes the common set of attributes shared by all concrete physical resources (e.g. EQUIPMENT) in the inventory.
+        Skipped properties: id,href
+    Place:
+      required:
+        - href
+        - id
+        - role
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the place
+        href:
+          type: string
+          description: Unique reference of the place
+        name:
+          type: string
+          description: A user-friendly name for the place, such as "Paris Store",
+            "London Store", "Main Home"
+        role:
+          type: string
+          description: 'Role of the place (for instance: ''home delivery'', ''shop
+            retrieval'')'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+      description: Place reference. Place defines the places where the products are
+        sold or delivered.
+    PlaceRef:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of a related entity.
+        href:
+          type: string
+          description: Reference of the related entity.
+        name:
+          type: string
+          description: Name of the related entity.
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: Place reference. PlaceRef defines the placeRefs where the products
+        are sold or delivered.
+    Quantity:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: Numeric value in a given unit
+          format: float
+          default: 1.0
+        units:
+          type: string
+          description: Unit
+      description: An amount in a given unit
+    RelatedParty:
+      required:
+        - '@referredType'
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of a related entity.
+        href:
+          type: string
+          description: Reference of the related entity.
+        name:
+          type: string
+          description: Name of the related entity.
+        role:
+          type: string
+          description: Role played by the related party
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: Related Entity reference. A related party defines party or party
+        role linked to a specific entity.
+    RelatedPlaceRefOrValue:
+      required:
+        - href
+        - id
+        - role
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the place
+        href:
+          type: string
+          description: Unique reference of the place
+        name:
+          type: string
+          description: A user-friendly name for the place, such as "Paris Store",
+            "London Store", "Main Home"
+        role:
+          type: string
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: Related Entity reference. A related place defines a place described
+        by reference or by value linked to a specific entity. The polymorphic attributes
+        @type, @schemaLocation & @referredType are related to the place entity and
+        not the RelatedPlaceRefOrValue class itself
+    Resource:
+      required:
+        - href
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of an instance of the resource. Required to be unique
+            within the resource type.  Used in URIs as the identifier for specific
+            instances of a type.
+        href:
+          type: string
+          description: The URI for the object itself.
+        category:
+          type: string
+          description: Category of the concrete resource. e.g Gold, Silver for MSISDN
+            concrete resource
+        description:
+          type: string
+          description: free-text description of the resource
+        endOperatingDate:
+          type: string
+          description: A date time( DateTime). The date till the resource is operating
+          format: date-time
+        name:
+          type: string
+          description: A string used to give a name to the resource
+        resourceVersion:
+          type: string
+          description: A field that identifies the specific version of an instance
+            of a resource.
+        startOperatingDate:
+          type: string
+          description: A date time( DateTime). The date from which the resource is
+            operating
+          format: date-time
+        administrativeState:
+          $ref: '#/components/schemas/ResourceAdministrativeStateType'
+        attachment:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+        note:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        operationalState:
+          $ref: '#/components/schemas/ResourceOperationalStateType'
+        place:
+          $ref: '#/components/schemas/RelatedPlaceRefOrValue'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+        resourceCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        resourceRelationship:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRelationship'
+        resourceSpecification:
+          $ref: '#/components/schemas/ResourceSpecificationRef'
+        resourceStatus:
+          $ref: '#/components/schemas/ResourceStatusType'
+        usageState:
+          $ref: '#/components/schemas/ResourceUsageStateType'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+      description: Resource is an abstract entity that describes the common set of
+        attributes shared by all concrete resources (e.g. TPE, EQUIPMENT) in the inventory.
+    Resource_Create:
+      required:
+        - name
+      type: object
+      properties:
+        category:
+          type: string
+          description: Category of the concrete resource. e.g Gold, Silver for MSISDN
+            concrete resource
+        description:
+          type: string
+          description: free-text description of the resource
+        endOperatingDate:
+          type: string
+          description: A date time( DateTime). The date till the resource is operating
+          format: date-time
+        name:
+          type: string
+          description: A string used to give a name to the resource
+        resourceVersion:
+          type: string
+          description: A field that identifies the specific version of an instance
+            of a resource.
+        startOperatingDate:
+          type: string
+          description: A date time( DateTime). The date from which the resource is
+            operating
+          format: date-time
+        administrativeState:
+          $ref: '#/components/schemas/ResourceAdministrativeStateType'
+        attachment:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+        note:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        operationalState:
+          $ref: '#/components/schemas/ResourceOperationalStateType'
+        place:
+          $ref: '#/components/schemas/RelatedPlaceRefOrValue'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+        resourceCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        resourceRelationship:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRelationship'
+        resourceSpecification:
+          $ref: '#/components/schemas/ResourceSpecificationRef'
+        resourceStatus:
+          $ref: '#/components/schemas/ResourceStatusType'
+        usageState:
+          $ref: '#/components/schemas/ResourceUsageStateType'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+      description: |-
+        Resource is an abstract entity that describes the common set of attributes shared by all concrete resources (e.g. TPE, EQUIPMENT) in the inventory.
+        Skipped properties: id,href
+    Resource_Update:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Category of the concrete resource. e.g Gold, Silver for MSISDN
+            concrete resource
+        description:
+          type: string
+          description: free-text description of the resource
+        endOperatingDate:
+          type: string
+          description: A date time( DateTime). The date till the resource is operating
+          format: date-time
+        name:
+          type: string
+          description: A string used to give a name to the resource
+        resourceVersion:
+          type: string
+          description: A field that identifies the specific version of an instance
+            of a resource.
+        startOperatingDate:
+          type: string
+          description: A date time( DateTime). The date from which the resource is
+            operating
+          format: date-time
+        administrativeState:
+          $ref: '#/components/schemas/ResourceAdministrativeStateType'
+        attachment:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachmentRefOrValue'
+        note:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        operationalState:
+          $ref: '#/components/schemas/ResourceOperationalStateType'
+        place:
+          $ref: '#/components/schemas/RelatedPlaceRefOrValue'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+        resourceCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        resourceRelationship:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRelationship'
+        resourceSpecification:
+          $ref: '#/components/schemas/ResourceSpecificationRef'
+        resourceStatus:
+          $ref: '#/components/schemas/ResourceStatusType'
+        usageState:
+          $ref: '#/components/schemas/ResourceUsageStateType'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+      description: |-
+        Resource is an abstract entity that describes the common set of attributes shared by all concrete resources (e.g. TPE, EQUIPMENT) in the inventory.
+        Skipped properties: id,href
+    ResourceAdministrativeStateType:
+      type: string
+      description: ResourceAdministrativeStateType enumerations
+      enum:
+        - locked
+        - unlocked
+        - shutdown
+    ResourceOperationalStateType:
+      type: string
+      description: ResourceOperationalStateType enumerations
+      enum:
+        - enable
+        - disable
+    ResourceRelationship:
+      type: object
+      properties:
+        id:
+          type: string
+          description: id of the related resource.
+        href:
+          type: string
+          description: href of the related resource.
+        relationshipType:
+          type: string
+        resourceRelationshipCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+    ResourceSpecificationRef:
+      required:
+        - href
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the resource specification
+        href:
+          type: string
+          description: Reference of the resource specification
+        name:
+          type: string
+          description: Name of the requiredResourceSpecification
+        version:
+          type: string
+          description: Resource specification version
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name
+        '@referredType':
+          type: string
+          description: The actual type of the target instance when needed for disambiguation.
+      description: 'Resource Specification reference: The ResourceSpecification is
+        required to realize a ProductSpecification.'
+    ResourceStatusType:
+      type: string
+      description: ResourceStatusType enumerations
+      enum:
+        - standby
+        - alarm
+        - available
+        - reserved
+        - unknown
+        - suspended
+    ResourceUsageStateType:
+      type: string
+      description: ResourceUsageStateType enumerations
+      enum:
+        - idle
+        - active
+        - busy
+    TimePeriod:
+      type: object
+      properties:
+        endDateTime:
+          type: string
+          description: End of the time period, using IETC-RFC-3339 format
+          format: date-time
+        startDateTime:
+          type: string
+          description: Start of the time period, using IETC-RFC-3339 format. If you
+            define a start, you must also define an end
+          format: date-time
+      description: A period of time, either as a deadline (endDateTime only) a startDateTime
+        only, or both
+    EventSubscription:
+      required:
+        - callback
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the listener
+        callback:
+          type: string
+          description: The callback being registered.
+        query:
+          type: string
+          description: additional data to be passed
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+    EventSubscriptionInput:
+      required:
+        - callback
+      type: object
+      properties:
+        callback:
+          type: string
+          description: The callback being registered.
+        query:
+          type: string
+          description: additional data to be passed
+      description: Sets the communication endpoint address the service instance must
+        use to deliver notification information
+    ResourceCreateEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the Process flow
+        href:
+          type: string
+          description: Reference of the ProcessFlow
+        eventId:
+          type: string
+          description: The identifier of the notification.
+        eventTime:
+          type: string
+          description: Time of the event occurrence.
+          format: date-time
+        eventType:
+          type: string
+          description: The type of the notification.
+        correlationId:
+          type: string
+          description: The correlation id for this event.
+        domain:
+          type: string
+          description: The domain of the event.
+        title:
+          type: string
+          description: The title of the event.
+        description:
+          type: string
+          description: An explnatory of the event.
+        priority:
+          type: string
+          description: A priority.
+        timeOcurred:
+          type: string
+          description: The time the event occured.
+          format: date-time
+        event:
+          $ref: '#/components/schemas/ResourceCreateEventPayload'
+      description: The notification data structure
+    ResourceCreateEventPayload:
+      type: object
+      properties:
+        resource:
+          $ref: '#/components/schemas/Resource'
+      description: The event data structure
+    ResourceAttributeValueChangeEvent:
+      type: object
+      properties:
+        eventId:
+          type: string
+          description: The identifier of the notification.
+        eventTime:
+          type: string
+          description: Time of the event occurrence.
+          format: date-time
+        eventType:
+          type: string
+          description: The type of the notification.
+        correlationId:
+          type: string
+          description: The correlation id for this event.
+        domain:
+          type: string
+          description: The domain of the event.
+        title:
+          type: string
+          description: The title of the event.
+        description:
+          type: string
+          description: An explnatory of the event.
+        priority:
+          type: string
+          description: A priority.
+        timeOcurred:
+          type: string
+          description: The time the event occured.
+          format: date-time
+        fieldPath:
+          type: string
+          description: The path identifying the object field concerned by this notification.
+        event:
+          $ref: '#/components/schemas/ResourceAttributeValueChangeEventPayload'
+      description: The notification data structure
+    ResourceAttributeValueChangeEventPayload:
+      type: object
+      properties:
+        resource:
+          $ref: '#/components/schemas/Resource'
+      description: The event data structure
+    ResourceStateChangeEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the Process flow
+        href:
+          type: string
+          description: Reference of the ProcessFlow
+        eventId:
+          type: string
+          description: The identifier of the notification.
+        eventTime:
+          type: string
+          description: Time of the event occurrence.
+          format: date-time
+        eventType:
+          type: string
+          description: The type of the notification.
+        correlationId:
+          type: string
+          description: The correlation id for this event.
+        domain:
+          type: string
+          description: The domain of the event.
+        title:
+          type: string
+          description: The title of the event.
+        description:
+          type: string
+          description: An explnatory of the event.
+        priority:
+          type: string
+          description: A priority.
+        timeOcurred:
+          type: string
+          description: The time the event occured.
+          format: date-time
+        event:
+          $ref: '#/components/schemas/ResourceStateChangeEventPayload'
+      description: The notification data structure
+    ResourceStateChangeEventPayload:
+      type: object
+      properties:
+        resource:
+          $ref: '#/components/schemas/Resource'
+      description: The event data structure
+    ResourceDeleteEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the Process flow
+        href:
+          type: string
+          description: Reference of the ProcessFlow
+        eventId:
+          type: string
+          description: The identifier of the notification.
+        eventTime:
+          type: string
+          description: Time of the event occurrence.
+          format: date-time
+        eventType:
+          type: string
+          description: The type of the notification.
+        correlationId:
+          type: string
+          description: The correlation id for this event.
+        domain:
+          type: string
+          description: The domain of the event.
+        title:
+          type: string
+          description: The title of the event.
+        description:
+          type: string
+          description: An explnatory of the event.
+        priority:
+          type: string
+          description: A priority.
+        timeOcurred:
+          type: string
+          description: The time the event occured.
+          format: date-time
+        event:
+          $ref: '#/components/schemas/ResourceDeleteEventPayload'
+      description: The notification data structure
+    ResourceDeleteEventPayload:
+      type: object
+      properties:
+        resource:
+          $ref: '#/components/schemas/Resource'
+      description: The event data structure
+    PhysicalResourceCreateEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the Process flow
+        href:
+          type: string
+          description: Reference of the ProcessFlow
+        eventId:
+          type: string
+          description: The identifier of the notification.
+        eventTime:
+          type: string
+          description: Time of the event occurrence.
+          format: date-time
+        eventType:
+          type: string
+          description: The type of the notification.
+        correlationId:
+          type: string
+          description: The correlation id for this event.
+        domain:
+          type: string
+          description: The domain of the event.
+        title:
+          type: string
+          description: The title of the event.
+        description:
+          type: string
+          description: An explnatory of the event.
+        priority:
+          type: string
+          description: A priority.
+        timeOcurred:
+          type: string
+          description: The time the event occured.
+          format: date-time
+        event:
+          $ref: '#/components/schemas/PhysicalResourceCreateEventPayload'
+      description: The notification data structure
+    PhysicalResourceCreateEventPayload:
+      type: object
+      properties:
+        physicalResource:
+          $ref: '#/components/schemas/PhysicalResource'
+      description: The event data structure
+    PhysicalResourceAttributeValueChangeEvent:
+      type: object
+      properties:
+        eventId:
+          type: string
+          description: The identifier of the notification.
+        eventTime:
+          type: string
+          description: Time of the event occurrence.
+          format: date-time
+        eventType:
+          type: string
+          description: The type of the notification.
+        correlationId:
+          type: string
+          description: The correlation id for this event.
+        domain:
+          type: string
+          description: The domain of the event.
+        title:
+          type: string
+          description: The title of the event.
+        description:
+          type: string
+          description: An explnatory of the event.
+        priority:
+          type: string
+          description: A priority.
+        timeOcurred:
+          type: string
+          description: The time the event occured.
+          format: date-time
+        fieldPath:
+          type: string
+          description: The path identifying the object field concerned by this notification.
+        event:
+          $ref: '#/components/schemas/PhysicalResourceAttributeValueChangeEventPayload'
+      description: The notification data structure
+    PhysicalResourceAttributeValueChangeEventPayload:
+      type: object
+      properties:
+        physicalResource:
+          $ref: '#/components/schemas/PhysicalResource'
+      description: The event data structure
+    PhysicalResourceStateChangeEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the Process flow
+        href:
+          type: string
+          description: Reference of the ProcessFlow
+        eventId:
+          type: string
+          description: The identifier of the notification.
+        eventTime:
+          type: string
+          description: Time of the event occurrence.
+          format: date-time
+        eventType:
+          type: string
+          description: The type of the notification.
+        correlationId:
+          type: string
+          description: The correlation id for this event.
+        domain:
+          type: string
+          description: The domain of the event.
+        title:
+          type: string
+          description: The title of the event.
+        description:
+          type: string
+          description: An explnatory of the event.
+        priority:
+          type: string
+          description: A priority.
+        timeOcurred:
+          type: string
+          description: The time the event occured.
+          format: date-time
+        event:
+          $ref: '#/components/schemas/PhysicalResourceStateChangeEventPayload'
+      description: The notification data structure
+    PhysicalResourceStateChangeEventPayload:
+      type: object
+      properties:
+        physicalResource:
+          $ref: '#/components/schemas/PhysicalResource'
+      description: The event data structure
+    PhysicalResourceDeleteEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the Process flow
+        href:
+          type: string
+          description: Reference of the ProcessFlow
+        eventId:
+          type: string
+          description: The identifier of the notification.
+        eventTime:
+          type: string
+          description: Time of the event occurrence.
+          format: date-time
+        eventType:
+          type: string
+          description: The type of the notification.
+        correlationId:
+          type: string
+          description: The correlation id for this event.
+        domain:
+          type: string
+          description: The domain of the event.
+        title:
+          type: string
+          description: The title of the event.
+        description:
+          type: string
+          description: An explnatory of the event.
+        priority:
+          type: string
+          description: A priority.
+        timeOcurred:
+          type: string
+          description: The time the event occured.
+          format: date-time
+        event:
+          $ref: '#/components/schemas/PhysicalResourceDeleteEventPayload'
+      description: The notification data structure
+    PhysicalResourceDeleteEventPayload:
+      type: object
+      properties:
+        physicalResource:
+          $ref: '#/components/schemas/PhysicalResource'
+      description: The event data structure
+    Error:
+      required:
+        - code
+        - reason
+      type: object
+      properties:
+        code:
+          type: string
+          description: Application relevant detail, defined in the API or a common
+            list.
+        reason:
+          type: string
+          description: Explanation of the reason for the error which can be shown
+            to a client user.
+        message:
+          type: string
+          description: More details and corrective actions related to the error which
+            can be shown to a client user.
+        status:
+          type: string
+          description: HTTP Error code extension
+        referenceError:
+          type: string
+          description: URI of documentation describing the error.
+          format: uri
+        '@baseType':
+          type: string
+          description: When sub-classing, this defines the super-class.
+        '@schemaLocation':
+          type: string
+          description: A URI to a JSON-Schema file that defines additional attributes
+            and relationships
+          format: uri
+        '@type':
+          type: string
+          description: When sub-classing, this defines the sub-class entity name.
+      description: Used when an API throws an Error, typically with a HTTP error response-code
+        (3xx, 4xx, 5xx)
